@@ -173,11 +173,11 @@ public class Assignment2 {
 
         //Test available
         System.out.println("Test available:");
-        a2.available(12345,new Timestamp(new Date().getTime(), PGpoin(1, 0));
+        a2.available(12345,new Timestamp(new Date().getTime()), PGpoin(1, 0));
 
         //Test pick_up
         System.out.println("Test Pick_up:");
-        a2.picked_up(12345, 99, new Timestamp(new Date().getTime());
+        a2.picked_up(12345, 99, new Timestamp(new Date().getTime()));
 
       //   // Test dispatch
       //   System.out.println("Test dispatch:");
