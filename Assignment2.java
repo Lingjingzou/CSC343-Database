@@ -174,12 +174,13 @@ public class Assignment2 {
          java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
         //Test available
         System.out.println("Test available:");
-        a2.available(12345,timestamp, new PGpoint(1, 2.5));
+        boolean result = a2.available(12345,timestamp, new PGpoint(1, 2.5));
+        if (result == true){System.out.println("Finish available!");}
 
         //Test pick_up
         System.out.println("Test Pick_up:");
-        a2.picked_up(12345, 99, timestamp);
-
+        boolean result2 =a2.picked_up(12345, 99, timestamp);
+        if (result2 == true){System.out.println("Finish Pick Up!");}
       //   // Test dispatch
       //   System.out.println("Test dispatch:");
       //   a2.dispatch(new PGpoint(2, 10), new PGpoint(100, 100), new Timestamp(new Date().getTime()));
