@@ -174,7 +174,7 @@ public class Assignment2 {
          java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
         //Test available
         System.out.println("Test available:");
-        a2.available(12345,timestamp, PGpoin(1, 0));
+        a2.available(12345,timestamp, PGpoint(1, 0));
 
         //Test pick_up
         System.out.println("Test Pick_up:");
