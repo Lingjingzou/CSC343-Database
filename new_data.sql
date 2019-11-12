@@ -88,8 +88,8 @@ insert into billed values
 
 
 insert into driverrating values
--- (1, 5);
+(1, 5);
 
 insert into clientrating values
--- (1, 4);
+(1, 4);
 

@@ -163,15 +163,27 @@ public class Assignment2 {
 
    public static void main(String[] args) {
       // You can put testing code in here. It will not affect our autotester.
+      System.out.println("Hello!");
+
       Assignment2 a2;
       try {
         a2 = new Assignment2();
         String url = "jdbc:postgresql://localhost:5432/csc343h-zoulingj";
         a2.connectDB(url, "zoulingj", "");
-      //   boolean ans;
-      //   a2.dispatch(new PGpoint(1, 10), new PGpoint(25, 2), new Timestamp(new Date().getTime()));
-      } catch(Exception e)
-      {   
+
+        //Test available
+        System.out.println("Test available:");
+        a2.available(12345,new Timestamp(new Date().getTime(), PGpoin(1, 0));
+
+        //Test pick_up
+        System.out.println("Test Pick_up:");
+        a2.picked_up(12345, 99, new Timestamp(new Date().getTime());
+
+      //   // Test dispatch
+      //   System.out.println("Test dispatch:");
+      //   a2.dispatch(new PGpoint(2, 10), new PGpoint(100, 100), new Timestamp('2016-01-08 04:11')));
+
+      } catch(Exception e){   
         System.out.println("Test failed");
         e.printStackTrace();
       }
