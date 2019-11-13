@@ -107,13 +107,13 @@ public class Assignment2 {
     */
    public boolean picked_up(int driverID, int clientID, Timestamp when) {
       // Implement this method!
-      try {
+      // try {
 
-      } catch (SQLException e) {
-         System.err.println("Got an exception!");
-         System.err.println(e.getMessage());
-         // e.printStackTrace();
-      }
+      // } catch (SQLException e) {
+      //    System.err.println("Got an exception!");
+      //    System.err.println(e.getMessage());
+      //    // e.printStackTrace();
+      // }
       return false;
    }
    
