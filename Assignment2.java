@@ -75,24 +75,16 @@ public class Assignment2 {
    public boolean available(int driverID, Timestamp when, PGpoint location) {
       // Implement this method!
       try {
-         // String queryString = "INSERT INTO available (driverID, when, location)" 
-         //                      + " VALUES (?, ?, ?)";
+         String queryString = "INSERT INTO available (driverID, when, location)" 
+                              + " VALUES (?, ?, ?)";
          
-         // PreparedStatement st = connection.prepareStatement(queryString);
-         // st.setInt(1, driverID);
-         // System.err.println("Set driver ID!");
-         // st.setTimestamp(2, when);
-         // st.setObject(3, location);
-         // st.execute();
-         // return true;
-
-      
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO Available (driverID, when, location)");
-            ps.setInt(1, driverID);
-            ps.setTimestamp(2, when);
-            ps.setObject(3, location);
-            ps.executeUpdate();
-            return true;
+         PreparedStatement st = connection.prepareStatement(queryString);
+         st.setInt(1, driverID);
+         System.err.println("Set driver ID!");
+         st.setTimestamp(2, when);
+         st.setObject(3, location);
+         st.execute();
+         return true;
 
       } catch (SQLException e) {
          System.err.println("Got an exception!");
@@ -173,18 +165,17 @@ public class Assignment2 {
         boolean conn =a2.connectDB(url, "zoulingj", "");
         if (conn == true){System.out.println("Connected!");}
         
-        Date date= new Date();
-        long time = date. getTime();
-        System. out. println("Time in Milliseconds: " + time);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println(timestamp);
       //   Timestamp ts = new Timestamp(time);
       //   Timestamp ts = new Timestamp(System.currentTimeMillis());
         //Test available
-        boolean result = a2.available(12345,new Timestamp(time) , new PGpoint(1, 2.5));
+        boolean result = a2.available(12345,timestamp , new PGpoint(1, 2.5));
         if (result == true){System.out.println("Finish available!");}
 
       //   //Test pick_up
       //   System.out.println("Test Pick_up:");
-      //   boolean result2 =a2.picked_up(12345, 99, ts);
+      //   boolean result2 =a2.picked_up(12345, 99, timestamp);
       //   if (result2 == true){System.out.println("Finish Pick Up!");}
       
        //   // Test dispatch
