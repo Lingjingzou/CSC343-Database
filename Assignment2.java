@@ -180,7 +180,7 @@ public class Assignment2 {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         //Test available
-        boolean result = a2.available(12345,timestamp, new PGpoint(1, 2.5));
+        boolean result = a2.available(12345,new Timestamp(System.currentTimeMillis()), new PGpoint(1, 2.5));
         if (result == true){System.out.println("Finish available!");}
 
         //Test pick_up
