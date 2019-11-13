@@ -33,7 +33,7 @@ public class Assignment2 {
    public boolean connectDB(String URL, String username, String password) {
       // Implement this method!
       try {
-         connection = DriverManager.getConnection(URL + "?currentSchema=uber", username, password);
+         connection = DriverManager.getConnection(URL + "?currentSchema=uber.ddl", username, password);
      } catch(SQLException se) {
          return false;
      }
@@ -75,7 +75,7 @@ public class Assignment2 {
    public boolean available(int driverID, Timestamp when, PGpoint location) {
       // Implement this method!
       try {
-         String queryString = "INSERT INTO available (driver_id, datetime, location)" 
+         String queryString = "INSERT INTO Available (driver_id, datetime, location)" 
                               + " VALUES (?, ?, ?)";
          
          PreparedStatement st = connection.prepareStatement(queryString);
