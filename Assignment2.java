@@ -73,12 +73,12 @@ public class Assignment2 {
    public boolean available(int driverID, Timestamp when, PGpoint location) {
       // Implement this method!
       try {
-         String queryString = "INSERT INTO Available (driverID, when, location)" 
+         String queryString = "INSERT INTO available (driverID, when, location)" 
                               + " VALUES (?, ?, ?)";
          PreparedStatement ps = connection.prepareStatement(queryString);
          ps.setInt(1, driverID);
          System.err.println("Set driver ID!");
-         ps.setObject(2, when);
+         ps.setTimestamp(2, when);
          ps.setObject(3, location);
          ps.executeUpdate();
          return true;
@@ -105,30 +105,13 @@ public class Assignment2 {
     */
    public boolean picked_up(int driverID, int clientID, Timestamp when) {
       // Implement this method!
-      // try {
-      //    String query = "select * from Pickup";
-      //    PreparedStatement pStatement = connection.prepareStatement(query);
-      //    ResultSet result = pStatement.executeQuery();
+      try {
 
-      //    while (result.next()) {
-      //       if (result.getInt("driverID") == driverID && result.getInt("clientID") == clientID && 
-      //          result.getTimestamp("when") == when) {
-      //             return false;
-      //          }
-      //    }
-
-      //    PreparedStatement ps = connection.prepareStatement("INSERT INTO Pickup (driverID, clientID, when) VALUES (?, ?, ?)");
-      //    ps.setInt(1, driverID);
-      //    ps.setInt(2, clientID);
-      //    ps.setTimestamp(3, when);
-      //    ps.executeUpdate();
-      //    return true;
-
-      // } catch (SQLException e) {
-      //    System.err.println("Got an exception!");
-      //    System.err.println(e.getMessage());
-      //    // e.printStackTrace();
-      // }
+      } catch (SQLException e) {
+         System.err.println("Got an exception!");
+         System.err.println(e.getMessage());
+         // e.printStackTrace();
+      }
       return false;
    }
    
