@@ -163,7 +163,7 @@ public class Assignment2 {
       Assignment2 a2;
       try {
         a2 = new Assignment2();
-        String url = "jdbc:postgresql://localhost:5432/csc343h-zoulingj?currentSchema=uber";
+        String url = "jdbc:postgresql://localhost:5432/csc343h-zoulingj"s;
         boolean conn =a2.connectDB(url, "zoulingj", "");
         if (conn == true){System.out.println("Connected!");}
         
