@@ -84,7 +84,8 @@ public class Assignment2 {
          st.setTimestamp(2, when);
          System.err.println("Set datetime!");
          st.setObject(3, location);
-         st.execute();
+         System.err.println("Set location!");
+         st.executeUpdate();
          return true;
 
       } catch (SQLException e) {
