@@ -184,7 +184,7 @@ public class Assignment2 {
       //   System.out.println("Test dispatch:");
       //   a2.dispatch(new PGpoint(2, 10), new PGpoint(100, 100), new Timestamp(new Date().getTime()));
 
-        boolean discon =a2.connectDB(url, "zoulingj", "");
+        boolean discon =a2.disconnectDB();
         if (discon == true){System.out.println("Disconnected!");}
       
 
