@@ -73,8 +73,10 @@ public class Assignment2 {
    public boolean available(int driverID, Timestamp when, PGpoint location) {
       // Implement this method!
       try {
-         String queryString = "INSERT INTO available (driverID, when, location)" 
-                              + " VALUES (?, ?, ?)";
+         // String queryString = "INSERT INTO available (driverID, when, location)" 
+         //                      + " VALUES (?, ?, ?)";
+         String queryString = "insert into available values" +
+                           "(12345, '2016-01-08 04:05', '(1, 2)');";
          PreparedStatement ps = connection.prepareStatement(queryString);
          ps.setInt(1, driverID);
          System.err.println("Set driver ID!");
@@ -163,14 +165,15 @@ public class Assignment2 {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         //Test available
-        boolean result = a2.available(12345,new Timestamp(System.currentTimeMillis()), new PGpoint(1, 2.5));
+        boolean result = a2.available(12345,timestamp , new PGpoint(1, 2.5));
         if (result == true){System.out.println("Finish available!");}
 
         //Test pick_up
         System.out.println("Test Pick_up:");
         boolean result2 =a2.picked_up(12345, 99, timestamp);
         if (result2 == true){System.out.println("Finish Pick Up!");}
-      //   // Test dispatch
+      
+       //   // Test dispatch
       //   System.out.println("Test dispatch:");
       //   a2.dispatch(new PGpoint(2, 10), new PGpoint(100, 100), new Timestamp(new Date().getTime()));
 
