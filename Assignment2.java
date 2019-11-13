@@ -81,7 +81,7 @@ public class Assignment2 {
          PreparedStatement st = connection.prepareStatement(queryString);
          st.setInt(1, driverID);
          System.err.println("Set driver ID!");
-         st.setTimestamp(2, when);
+         // st.setTimestamp(2, when);
          st.setObject(3, location);
          st.execute();
          return true;
@@ -174,10 +174,10 @@ public class Assignment2 {
         boolean result = a2.available(12345,ts , new PGpoint(1, 2.5));
         if (result == true){System.out.println("Finish available!");}
 
-        //Test pick_up
-        System.out.println("Test Pick_up:");
-        boolean result2 =a2.picked_up(12345, 99, ts);
-        if (result2 == true){System.out.println("Finish Pick Up!");}
+      //   //Test pick_up
+      //   System.out.println("Test Pick_up:");
+      //   boolean result2 =a2.picked_up(12345, 99, ts);
+      //   if (result2 == true){System.out.println("Finish Pick Up!");}
       
        //   // Test dispatch
       //   System.out.println("Test dispatch:");
