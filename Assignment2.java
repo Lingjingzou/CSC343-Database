@@ -82,7 +82,7 @@ public class Assignment2 {
          // System.err.println("Set driver ID!");
          // ps.setTimestamp(2, when);
          // ps.setObject(3, location);
-         ps.execute();
+         ps.executeQuery();
          return true;
 
       } catch (SQLException e) {
