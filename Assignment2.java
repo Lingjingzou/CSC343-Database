@@ -79,10 +79,10 @@ public class Assignment2 {
                               + " VALUES (?, ?, ?)";
          
          PreparedStatement st = connection.prepareStatement(queryString);
-         st.setInt(1, driverID);
+         st.setInt(0, driverID);
          System.err.println("Set driver ID!");
-         st.setTimestamp(2, when);
-         st.setObject(3, location);
+         st.setTimestamp(1, when);
+         st.setObject(2, location);
          st.execute();
          return true;
 
