@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Calendar;
 // You should use this class so that you can represent SQL points as
 // Java PGpoint objects.
 import org.postgresql.geometric.PGpoint;
@@ -178,9 +179,9 @@ public class Assignment2 {
         String url = "jdbc:postgresql://localhost:5432/csc343h-zoulingj";
         a2.connectDB(url, "zoulingj", "");
 
-        Calendar calendar = Calendar.getInstance();
-       java.sql.Date timestamp = new java.sql.Date(calendar.getTime().getTime());
          // java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
+         Calendar calendar = Calendar.getInstance();
+      java.sql.Date timestamp = new java.sql.Date(calendar.getTime().getTime());
         //Test available
         System.out.println("Test available:");
         boolean result = a2.available(12345,timestamp, new PGpoint(1, 2.5));
