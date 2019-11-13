@@ -1,5 +1,5 @@
 import java.sql.*;
-
+import java.sql.Date;
 // You should use this class so that you can represent SQL points as
 // Java PGpoint objects.
 import org.postgresql.geometric.PGpoint;
@@ -180,12 +180,12 @@ public class Assignment2 {
         a2.connectDB(url, "zoulingj", "");
 
         //Test available
-        boolean result = a2.available(12345,"2008-01-01 00:00:01", new PGpoint(1, 2.5));
+        boolean result = a2.available(12345,new Timestamp(new Date().getTime()), new PGpoint(1, 2.5));
         if (result == true){System.out.println("Finish available!");}
 
         //Test pick_up
         System.out.println("Test Pick_up:");
-        boolean result2 =a2.picked_up(12345, 99, timestamp);
+        boolean result2 =a2.picked_up(12345, 99, new Timestamp(new Date().getTime()));
         if (result2 == true){System.out.println("Finish Pick Up!");}
       //   // Test dispatch
       //   System.out.println("Test dispatch:");
