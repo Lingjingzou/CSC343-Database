@@ -81,7 +81,7 @@ public class Assignment2 {
          PreparedStatement st = connection.prepareStatement(queryString);
          st.setInt(1, driverID);
          System.err.println("Set driver ID!");
-         st.setTimestamp(2,);
+         st.setTimestamp(2, when);
          st.setObject(3, location);
          st.execute();
          return true;
