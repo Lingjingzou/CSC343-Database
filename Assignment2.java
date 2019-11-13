@@ -81,7 +81,7 @@ public class Assignment2 {
          PreparedStatement st = connection.prepareStatement(queryString);
          st.setInt(1, driverID);
          System.err.println("Set driver ID!");
-         // st.setTimestamp(2, when);
+         st.setTimestamp(2,);
          st.setObject(3, location);
          st.execute();
          return true;
@@ -89,7 +89,7 @@ public class Assignment2 {
       } catch (SQLException e) {
          System.err.println("Got an exception!");
          System.err.println(e.getMessage());
-         // e.printStackTrace();
+         e.printStackTrace();
       }
       return false;
    }
@@ -168,10 +168,10 @@ public class Assignment2 {
         Date date= new Date();
         long time = date. getTime();
         System. out. println("Time in Milliseconds: " + time);
-        Timestamp ts = new Timestamp(time);
+      //   Timestamp ts = new Timestamp(time);
       //   Timestamp ts = new Timestamp(System.currentTimeMillis());
         //Test available
-        boolean result = a2.available(12345,ts , new PGpoint(1, 2.5));
+        boolean result = a2.available(12345,new Timestamp(time) , new PGpoint(1, 2.5));
         if (result == true){System.out.println("Finish available!");}
 
       //   //Test pick_up
