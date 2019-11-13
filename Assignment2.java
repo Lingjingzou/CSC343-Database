@@ -77,7 +77,7 @@ public class Assignment2 {
          PreparedStatement ps = connection.prepareStatement(queryString);
          ps.setInt(1, driverID);
          System.err.println("Set driver ID!");
-         ps.setTimestamp(2, when);
+         // ps.setTimestamp(2, when);
          ps.setObject(3, location);
          ps.executeUpdate();
          return true;
@@ -85,7 +85,7 @@ public class Assignment2 {
       } catch (SQLException e) {
          System.err.println("Got an exception!");
          System.err.println(e.getMessage());
-         e.printStackTrace();
+         // e.printStackTrace();
       }
       return false;
    }
@@ -124,7 +124,9 @@ public class Assignment2 {
       //    return true;
 
       // } catch (SQLException e) {
-      //    e.printStackTrace();
+      //    System.err.println("Got an exception!");
+      //    System.err.println(e.getMessage());
+      //    // e.printStackTrace();
       // }
       return false;
    }
