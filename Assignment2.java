@@ -73,11 +73,12 @@ public class Assignment2 {
    public boolean available(int driverID, Timestamp when, PGpoint location) {
       // Implement this method!
       try {
-         String queryString = "INSERT INTO Available (driverID, when, location)"+ " values (?, ?, ?)";
+         String queryString = "INSERT INTO Available (driverID, when, location)" 
+                              + " VALUES (?, ?, ?)";
          PreparedStatement ps = connection.prepareStatement(queryString);
          ps.setInt(1, driverID);
          System.err.println("Set driver ID!");
-         // ps.setTimestamp(2, when);
+         ps.setTimestamp(2, when);
          ps.setObject(3, location);
          ps.executeUpdate();
          return true;
@@ -177,7 +178,9 @@ public class Assignment2 {
         String url = "jdbc:postgresql://localhost:5432/csc343h-zoulingj";
         a2.connectDB(url, "zoulingj", "");
 
-         java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
+        Calendar calendar = Calendar.getInstance();
+       java.sql.Date timestamp = new java.sql.Date(calendar.getTime().getTime());
+         // java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
         //Test available
         System.out.println("Test available:");
         boolean result = a2.available(12345,timestamp, new PGpoint(1, 2.5));
