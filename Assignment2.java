@@ -75,14 +75,16 @@ public class Assignment2 {
       try {
          // String queryString = "INSERT INTO available (driverID, when, location)" 
          //                      + " VALUES (?, ?, ?)";
-         String queryString = "INSERT INTO available VALUES" +
-                           "(?, ?, ?);";
-         PreparedStatement ps = connection.prepareStatement(queryString);
-         // ps.setInt(1, driverID);
+         
+         // PreparedStatement ps = connection.prepareStatement(queryString);
+
+         Statement st = connection.createStatement();
+         st.executeUpdate("INSERT INTO available (driver_id, datetime, location) "
+          +"VALUES (22222, '2016-01-08 04:05', '(1, 2)')");
+         // st.setInt(1, driverID);
          // System.err.println("Set driver ID!");
-         // ps.setTimestamp(2, when);
-         // ps.setObject(3, location);
-         ps.executeUpdate();
+         // st.setTimestamp(2, when);
+         // st.setObject(3, location);
          return true;
 
       } catch (SQLException e) {
@@ -161,7 +163,9 @@ public class Assignment2 {
       try {
         a2 = new Assignment2();
         String url = "jdbc:postgresql://localhost:5432/csc343h-zoulingj";
-        a2.connectDB(url, "zoulingj", "");
+        boolean conn =a2.connectDB(url, "zoulingj", "");
+        if (conn == true){System.out.println("Connected!");}
+        
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         //Test available
@@ -176,6 +180,10 @@ public class Assignment2 {
        //   // Test dispatch
       //   System.out.println("Test dispatch:");
       //   a2.dispatch(new PGpoint(2, 10), new PGpoint(100, 100), new Timestamp(new Date().getTime()));
+
+        boolean discon =a2.connectDB(url, "zoulingj", "");
+        if (discon == true){System.out.println("Disconnected!");}
+      
 
       } catch(Exception e){   
         System.out.println("Test failed");
