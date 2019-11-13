@@ -75,16 +75,16 @@ public class Assignment2 {
    public boolean available(int driverID, Timestamp when, PGpoint location) {
       // Implement this method!
       try {
-         String queryString = "INSERT INTO available (driver_id, datetime, location)" 
-                              + " VALUES (?, ?, ?)";
+         String queryString = "INSERT INTO Available (driver_id, datetime, location)" 
+                              + " VALUES (22222, '2016-01-08 04:05', '(1, 2)')";
          
          PreparedStatement st = connection.prepareStatement(queryString);
-         st.setInt(1, driverID);
-         System.err.println("Set driver ID!");
-         st.setTimestamp(2, when);
-         System.err.println("Set datetime!");
-         st.setObject(3, location);
-         st.executeUpdate();
+         // st.setInt(1, driverID);
+         // System.err.println("Set driver ID!");
+         // st.setTimestamp(2, when);
+         // System.err.println("Set datetime!");
+         // st.setObject(3, location);
+         st.execute();
          return true;
 
       } catch (SQLException e) {
