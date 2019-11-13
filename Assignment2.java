@@ -1,4 +1,6 @@
 import java.sql.*;
+import java. util. Date;
+import java. sql. Timestamp;
 // You should use this class so that you can represent SQL points as
 // Java PGpoint objects.
 import org.postgresql.geometric.PGpoint;
@@ -77,10 +79,6 @@ public class Assignment2 {
                               + " VALUES (?, ?, ?)";
          
          PreparedStatement st = connection.prepareStatement(queryString);
-
-         // Statement st = connection.createStatement();
-         // st.executeUpdate("INSERT INTO available (driver_id, datetime, location) "
-         //  +"VALUES (22222, '2016-01-08 04:05', '(1, 2)')");
          st.setInt(1, driverID);
          System.err.println("Set driver ID!");
          st.setTimestamp(2, when);
@@ -167,15 +165,18 @@ public class Assignment2 {
         boolean conn =a2.connectDB(url, "zoulingj", "");
         if (conn == true){System.out.println("Connected!");}
         
-
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Date date= new Date();
+        long time = date. getTime();
+        System. out. println("Time in Milliseconds: " + time);
+        Timestamp ts = new Timestamp(time);
+      //   Timestamp ts = new Timestamp(System.currentTimeMillis());
         //Test available
-        boolean result = a2.available(12345,timestamp , new PGpoint(1, 2.5));
+        boolean result = a2.available(12345,ts , new PGpoint(1, 2.5));
         if (result == true){System.out.println("Finish available!");}
 
         //Test pick_up
         System.out.println("Test Pick_up:");
-        boolean result2 =a2.picked_up(12345, 99, timestamp);
+        boolean result2 =a2.picked_up(12345, 99, ts);
         if (result2 == true){System.out.println("Finish Pick Up!");}
       
        //   // Test dispatch
