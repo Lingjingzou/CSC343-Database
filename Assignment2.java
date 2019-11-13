@@ -75,7 +75,7 @@ public class Assignment2 {
    public boolean available(int driverID, Timestamp when, PGpoint location) {
       // Implement this method!
       try {
-         String queryString = "INSERT INTO available (driverID, when, location)" 
+         String queryString = "INSERT INTO available (driver_id, datetime, location)" 
                               + " VALUES (?, ?, ?)";
          
          PreparedStatement st = connection.prepareStatement(queryString);
@@ -153,6 +153,7 @@ public class Assignment2 {
     */
    public void dispatch(PGpoint NW, PGpoint SE, Timestamp when) {
       // Implement this method!
+
    }
 
    public static void main(String[] args) {
