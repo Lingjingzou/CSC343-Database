@@ -100,28 +100,28 @@ public class Assignment2 {
     */
    public boolean picked_up(int driverID, int clientID, Timestamp when) {
       // Implement this method!
-      try {
-         // String query = "select * from Pickup";
-         // PreparedStatement pStatement = connection.prepareStatement(query);
-         // ResultSet result = pStatement.executeQuery();
+      // try {
+      //    String query = "select * from Pickup";
+      //    PreparedStatement pStatement = connection.prepareStatement(query);
+      //    ResultSet result = pStatement.executeQuery();
 
-         // while (result.next()) {
-         //    if (result.getInt("driverID") == driverID && result.getInt("clientID") == clientID && 
-         //       result.getTimestamp("when") == when) {
-         //          return false;
-         //       }
-         // }
+      //    while (result.next()) {
+      //       if (result.getInt("driverID") == driverID && result.getInt("clientID") == clientID && 
+      //          result.getTimestamp("when") == when) {
+      //             return false;
+      //          }
+      //    }
 
-         // PreparedStatement ps = connection.prepareStatement("INSERT INTO Pickup (driverID, clientID, when) VALUES (?, ?, ?)");
-         // ps.setInt(1, driverID);
-         // ps.setInt(2, clientID);
-         // ps.setTimestamp(3, when);
-         // ps.executeUpdate();
-         // return true;
+      //    PreparedStatement ps = connection.prepareStatement("INSERT INTO Pickup (driverID, clientID, when) VALUES (?, ?, ?)");
+      //    ps.setInt(1, driverID);
+      //    ps.setInt(2, clientID);
+      //    ps.setTimestamp(3, when);
+      //    ps.executeUpdate();
+      //    return true;
 
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
+      // } catch (SQLException e) {
+      //    e.printStackTrace();
+      // }
       return false;
    }
    
