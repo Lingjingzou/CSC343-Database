@@ -33,11 +33,13 @@ public class Assignment2 {
    public boolean connectDB(String URL, String username, String password) {
       // Implement this method!
       try {
-         connection = DriverManager.getConnection(URL + "?currentSchema=uber.ddl", username, password);
+         connection = DriverManager.getConnection(URL , username, password);
+         PreparedStatement stat = connection.prepareStatement("SET SEARCH_PATH TO uber, pubic");
+         stat.execute();
      } catch(SQLException se) {
          return false;
      }
-     // System.out.println("Connected to database");
+   //   System.out.println("Connected to database");
      return true;
    }
 
