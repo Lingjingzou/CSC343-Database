@@ -179,7 +179,7 @@ public class Assignment2 {
         String url = "jdbc:postgresql://localhost:5432/csc343h-zoulingj";
         a2.connectDB(url, "zoulingj", "");
 
-      Timestamp timestamp;
+      new Timestamp timestamp;
       timestamp.valueOf("2008-01-01 00:00:01");
         //Test available
         boolean result = a2.available(12345,timestamp, new PGpoint(1, 2.5));
