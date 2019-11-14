@@ -123,8 +123,10 @@ public class Assignment2 {
          while (re.next()) {
             if (re.getInt("driver_id") == driverID ){
                   request_ID = re.getInt("request_id");
+                  System.out.println("drive in dis found!");
                   break;
                }
+            return false;
          }
          System.out.println("Request : " + request_ID + "is found !");
 
