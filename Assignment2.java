@@ -119,7 +119,7 @@ public class Assignment2 {
          String que = "SELECT * FROM Dispatch";
          PreparedStatement Statement = connection.prepareStatement(que);
          ResultSet re = Statement.executeQuery();
-
+         System.out.println("driver_id:" + re.getInt("driver_id"));
          while (re.next()) {
             System.out.println("driver_id:" + re.getInt("driver_id"));
             if (re.getInt("driver_id") == driverID ){
