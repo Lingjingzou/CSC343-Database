@@ -88,6 +88,14 @@ public class Assignment2 {
          st.setObject(3, location);
          System.err.println("Set location!");
          st.executeUpdate();
+
+         PreparedStatement fis = connection.prepareStatement("SELECT * FROM Available");
+         ResultSet fi = fis.executeQuery();
+
+         while (fi.next()) {
+            System.out.println("have: " + fi.getInt("driver_id") + fi.getTimestamp("datetime") + fi.getTimestamp("location"));
+            }
+            
          return true;
 
       } catch (SQLException e) {
