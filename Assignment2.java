@@ -207,6 +207,185 @@ public class Assignment2 {
    public void dispatch(PGpoint NW, PGpoint SE, Timestamp when) {
       // Implement this method!
 
+      String query;
+      PreparedStatement pStatement;
+      int maxBillings = -1;
+      int reqId = -1;
+      int clientId = -1;
+      PGpoint location = NW;
+
+   try{
+
+      // get all requests that have not yet been picked up
+      query = "create view queuedRequests as select request_id from ((select request_id from Pickup) " +
+      "EXCEPT (select request_id from Request)) as t1 ";
+   pStatement = connection.prepareStatement(query);
+   ResultSet queuedRequests = pStatement.executeQuery();
+
+   // get client with total billings
+   query = "create view totalBillings as select client_id, sum(amount) as billings from Request r, " +
+      "Billed b where r.request_id = b.request_id group by client_id";
+   pStatement = connection.prepareStatement(query);
+   ResultSet totalBillings = pStatement.executeQuery();
+
+   // join queuedRequests and totalBillings
+   query = "create view requestWithBillings as select request_id, client_id, billings, location from " + 
+      "queuedRequests q, Requests r, totalBillings t, Place p where q.request_id = r.request_id and " + 
+      "r.client_id = t.client_id and r.source = p.name";
+   pStatement = connection.prepareStatement(query);
+   ResultSet requestWithBillings = pStatement.executeQuery();
+
+   // set up the boundary
+   double min_x;
+   double max_x;
+   double min_y;
+   double max_y;
+   if (NW.x <= SE.x) {
+      min_x = NW.x;
+      max_x = SE.x;
+   } else { 
+      min_x = SE.x;
+      max_x = NW.x;
+   }
+
+   if (NW.y <= SE.y) {
+      min_y = NW.y;
+      max_y = SE.y;
+   } else { 
+      min_y = SE.y;
+      max_y = NW.y;
+   }
+
+   // find the highest priority client within the boundary
+   while (requestWithBillings.next()) {
+      int currentBillings = requestWithBillings.getInt("billings");
+      int currentReqId = requestWithBillings.getInt("request_id");
+      int currentClient = requestWithBillings.getInt("client_id");
+      PGpoint currentLocation = (PGpoint) requestWithBillings.getObject("location");
+      if ((min_x <= currentLocation.x && currentLocation.x <= max_x) && 
+         (min_y <= currentLocation.y && currentLocation.y <= max_y)) {
+         if (currentBillings > maxBillings) {
+            maxBillings = currentBillings;
+            reqId = currentReqId;
+            location = currentLocation;
+            clientId = currentClient;
+         }
+      }
+   }
+
+   // Add the client we found into the table
+   query = "create table priorityClient (request_id integer, client_id integer, location point, total_billings real)";
+   pStatement = connection.prepareStatement(query);
+   ResultSet priorityClient = pStatement.executeQuery();
+
+   pStatement = connection.prepareStatement("INSERT INTO priorityclient (request_id, client_id, location, total_billings) " +
+      "VALUES (?, ?, ?, ?)");
+   pStatement.setInt(1, reqId);
+   pStatement.setInt(2, clientId);
+   pStatement.setObject(3, location);
+   pStatement.setObject(4, maxBillings);
+   pStatement.executeUpdate();
+
+
+   // get the latest availability declaration time of all drivers get the non latest availabilities of all drivers 
+   query = "create view notLatest as select a.driver_id as driver_id, a.datetime as datetime, " + 
+      "a.location as location from Available a1, Available a2 where a1.driver_id = a2.driver_id and a1.datetime < a2.datetime";
+   pStatement = connection.prepareStatement(query);
+   ResultSet notLatest = pStatement.executeQuery();
+
+   // get the latest availabilities of all drivers
+   query = "create view Latest as select driver_id, datetime, location from ((select driver_id, datetime, location " +
+      "from Available) EXCEPT (select driver_id, datetime, location from notLatest)) as t1";
+   pStatement = connection.prepareStatement(query);
+   ResultSet latest = pStatement.executeQuery();
+
+   // check if the latest availability declaration time is a time later than all times the driver is dispatched, put into a list
+   query = "create view hasBeenDispatched as select d.driver_id, d.datetime, d.location from Latest l, " + 
+      "Dispatch d where l.driver_id = d.driver_id and (d.datetime - l.datetime) > INTERVAL '0'";
+   pStatement = connection.prepareStatement(query);
+   ResultSet hasBeenDispatched = pStatement.executeQuery();
+
+   // get the remaining non dispatched drivers that are available
+   query = "create view hasNotBeenDispatched as select driver_id, datetime, location from " + 
+      "((select driver_id, datetime, location from latest) EXCEPT (select driver_id, datetime, location " + 
+      "from hasBeenDispatched)) as t1";
+   pStatement = connection.prepareStatement(query);
+   ResultSet hasNotBeenDispatched = pStatement.executeQuery();
+
+   // set up available drivers within boundary table
+   query = "create table driversAvailable (driver_id integer, location point)";
+   pStatement = connection.prepareStatement(query);
+   ResultSet driversAvailable = pStatement.executeQuery();
+
+   // check if the latest availability declaration time is a time later than any time 
+   // the driver is dispatched, put into a list if within bounds
+   while (hasNotBeenDispatched.next()) {
+      int driver_id = hasNotBeenDispatched.getInt("driver_id");
+      PGpoint currentLocation = (PGpoint) hasNotBeenDispatched.getObject("location");
+      if ((min_x <= currentLocation.x && currentLocation.x <= max_x) && 
+         (min_y <= currentLocation.y && currentLocation.y <= max_y)) {
+            pStatement = connection.prepareStatement("INSERT INTO driversAvailable (driver_id, location) " +
+               "VALUES (?, ?)");
+            pStatement.setInt(1, driver_id);
+            pStatement.setObject(2, currentLocation);
+            pStatement.executeUpdate();
+         }
+      }
+
+   // set up minimum distance table
+   query = "create table minDistance (driver_id integer, distance integer)";
+   pStatement = connection.prepareStatement(query);
+   ResultSet minDistance = pStatement.executeQuery();
+
+   query = "create view distances as select request_id, client_id, driver_id, p.location <@> d.location as distance ," + 
+      "d.location as car_location from priorityclient p, driversAvailable d";
+   pStatement = connection.prepareStatement(query);
+   ResultSet distances = pStatement.executeQuery();
+
+   query = "create view withoutClosestDistance as select d1.request_id as request_id, d1.client_id as client_id, " + 
+      "d1.driver_id as driver_id, d1.distance as distance, d1.car_location as car_location from distances d1, " + 
+      "distances d2 where d1.driver_id != d2.driver_id and d1.distance > d2.distance";
+   pStatement = connection.prepareStatement(query);
+   ResultSet withoutClosestDistance = pStatement.executeQuery();
+
+   query = "create view closestDistance as select request_id, client_id, driver_id, distance " +
+      "from ((select request_id, client_id, driver_id, distance, car_location from distances) EXCEPT " + 
+      "(select request_id, client_id, driver_id, distance, car_location from withoutClosestDistance)) as t1";
+   pStatement = connection.prepareStatement(query);
+   ResultSet closestDistance = pStatement.executeQuery();
+
+   query = "select request_id, client_id, driver_id, car_location from closestDistance";
+   pStatement = connection.prepareStatement(query);
+   ResultSet toAdd = pStatement.executeQuery();
+
+   if (toAdd.next()) {
+      int req_id = toAdd.getInt("request_id");
+      int driver_id = toAdd.getInt("driver_id");
+      PGpoint car_loc = (PGpoint) toAdd.getObject("car_location");
+      // insert driver of min distance into table
+      pStatement = connection.prepareStatement("INSERT INTO Dispatch (request_id, driver_id, car_location, datetime) " +
+         "VALUES (?, ?, ?, ?)");
+      pStatement.setInt(1, req_id);
+      pStatement.setInt(2, driver_id);
+      pStatement.setObject(3, car_loc);
+      pStatement.setTimestamp(4, when);
+      pStatement.executeUpdate();
+   }
+
+      // while (avl.next()) {
+      //    PreparedStatement ps = connection.prepareStatement("INSERT INTO Dispatch (request_id, driver_id, car_location, datetime) VALUES (?, ?, ?, ?)");
+      //    ps.setInt(1, request_ID);
+      //    ps.setTimestamp(2, driver_ID);
+      //    ps.setObject(3, car_loc); //from available
+      //    ps.setObject(4, when);
+      //    ps.executeUpdate();
+      // }
+
+   } catch (SQLException e) {
+      System.err.println("Got an exception!");
+      System.err.println(e.getMessage());
+      e.printStackTrace();
+   }
    }
 
    public static void main(String[] args) {
@@ -221,7 +400,7 @@ public class Assignment2 {
         if (conn == true){System.out.println("Connected!");}
         
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println(timestamp);
+      //   System.out.println(timestamp);
       //   Timestamp ts = new Timestamp(time);
       //   Timestamp ts = new Timestamp(System.currentTimeMillis());
         //Test available
@@ -233,9 +412,10 @@ public class Assignment2 {
         boolean result2 =a2.picked_up(12345, 99, timestamp);
         if (result2 == true){System.out.println("Finish Pick Up!");}
       
-       //   // Test dispatch
-      //   System.out.println("Test dispatch:");
-      //   a2.dispatch(new PGpoint(2, 10), new PGpoint(100, 100), new Timestamp(new Date().getTime()));
+         // Test dispatch
+        System.out.println("Test dispatch:");
+        boolean result3 = a2.dispatch(new PGpoint(1, 100), new PGpoint(100, 1), new Timestamp(new Date().getTime()));
+        if (result2 == true){System.out.println("Finish Dispatch!");}
 
         boolean discon =a2.disconnectDB();
         if (discon == true){System.out.println("Disconnected!");}
