@@ -131,11 +131,13 @@ public class Assignment2 {
          System.out.println("Request : " + request_ID + "is found !");
 
          String query = "SELECT * FROM Pickup";
+
          PreparedStatement pStatement = connection.prepareStatement(query);
          ResultSet result = pStatement.executeQuery();
 
          while (result.next()) {
             if (result.getInt("request_id") == request_ID){
+                  System.out.println("request exist");
                   return false;
                }
          }
