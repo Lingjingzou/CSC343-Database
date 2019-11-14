@@ -137,7 +137,7 @@ public class Assignment2 {
 
          while (result.next()) {
             if (result.getInt("request_id") == request_ID){
-                  System.out.println("request exist");
+                  System.out.println("pickup exist");
                   return false;
                }
          }
@@ -146,6 +146,14 @@ public class Assignment2 {
          ps.setInt(1, request_ID);
          ps.setTimestamp(2, when);
          ps.executeUpdate();
+
+         PreparedStatement fis = connection.prepareStatement("SELECT * FROM Pickup");
+         ResultSet fi = fis.executeQuery();
+
+         while (fi.next()) {
+            System.out.println("pick : r_id : " + fi.getInt("request_id") + fi.getTimestamp("datetime"));
+            }
+         
          return true;
 
       } catch (SQLException e) {
