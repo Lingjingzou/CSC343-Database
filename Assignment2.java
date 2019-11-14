@@ -121,6 +121,7 @@ public class Assignment2 {
          ResultSet re = Statement.executeQuery();
 
          while (re.next()) {
+            System.out.println("driver_id:" + re.getInt("driver_id"));
             if (re.getInt("driver_id") == driverID ){
                   request_ID = re.getInt("request_id");
                   System.out.println("drive in dis found!");
