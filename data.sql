@@ -50,7 +50,7 @@ insert into dispatch values
 
 
 insert into pickup values
-(1, '2016-01-08 04:14'),
+-- (1, '2016-01-08 04:14'),
 (2, '2013-02-01 08:06'),
 (3, '2013-02-02 08:06'),
 (4, '2013-02-03 08:06'),
@@ -61,7 +61,7 @@ insert into pickup values
 
 
 insert into dropoff values
-(1, '2016-01-08 04:14'),
+-- (1, '2016-01-08 04:14'),
 (2, '2013-02-01 08:16'),
 (3, '2013-02-02 08:16'),
 (4, '2013-02-03 08:16'),
@@ -76,7 +76,7 @@ insert into rates values
 
 
 insert into billed values
-(1, 8.5),
+-- (1, 8.5),
 (2, 255.2),
 (3, 105.4),
 (4, 175.5),
@@ -87,8 +87,8 @@ insert into billed values
 
 
 insert into driverrating values
-(1, 5);
+-- (1, 5);
 
 insert into clientrating values
-(1, 4);
+-- (1, 4);
 
