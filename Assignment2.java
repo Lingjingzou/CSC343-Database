@@ -112,13 +112,43 @@ public class Assignment2 {
     */
    public boolean picked_up(int driverID, int clientID, Timestamp when) {
       // Implement this method!
-      // try {
 
-      // } catch (SQLException e) {
-      //    System.err.println("Got an exception!");
-      //    System.err.println(e.getMessage());
-      //    // e.printStackTrace();
-      // }
+      int request_ID = 0;
+      try {
+
+         String que = "SELECT * FROM Dispatch";
+         PreparedStatement Statement = connection.prepareStatement(que);
+         ResultSet re = Statement.executeQuery();
+
+         while (re.next()) {
+            if (re.getInt("driver_id") == driverID ){
+                  request_ID = re.getInt("request_id");
+                  break;
+               }
+         }
+         System.out.println("Request : " + request_ID + "is found !");
+
+         String query = "SELECT * FROM Pickup";
+         PreparedStatement pStatement = connection.prepareStatement(query);
+         ResultSet result = pStatement.executeQuery();
+
+         while (result.next()) {
+            if (result.getInt("request_id") == request_ID){
+                  return false;
+               }
+         }
+
+         PreparedStatement ps = connection.prepareStatement("INSERT INTO Pickup (request_id, datetime) VALUES (?, ?)");
+         ps.setInt(1, request_ID);
+         ps.setTimestamp(2, when);
+         ps.executeUpdate();
+         return true;
+
+      } catch (SQLException e) {
+         System.err.println("Got an exception!");
+         System.err.println(e.getMessage());
+         // e.printStackTrace();
+      }
       return false;
    }
    
