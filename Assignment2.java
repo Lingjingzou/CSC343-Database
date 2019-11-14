@@ -414,8 +414,8 @@ public class Assignment2 {
       
          // Test dispatch
         System.out.println("Test dispatch:");
-        boolean result3 = a2.dispatch(new PGpoint(1, 100), new PGpoint(100, 1), new Timestamp(new Date().getTime()));
-        if (result2 == true){System.out.println("Finish Dispatch!");}
+        a2.dispatch(new PGpoint(1, 100), new PGpoint(100, 1), new Timestamp(new Date().getTime()));
+
 
         boolean discon =a2.disconnectDB();
         if (discon == true){System.out.println("Disconnected!");}
