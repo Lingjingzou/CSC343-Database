@@ -93,9 +93,9 @@ public class Assignment2 {
          ResultSet fi = fis.executeQuery();
 
          while (fi.next()) {
-            System.out.println("have: " + fi.getInt("driver_id") + fi.getTimestamp("datetime") + fi.getTimestamp("location"));
+            System.out.println("have: " + fi.getInt("driver_id") + fi.getTimestamp("datetime") + fi.getObject("location"));
             }
-            
+
          return true;
 
       } catch (SQLException e) {
