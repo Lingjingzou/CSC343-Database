@@ -210,17 +210,18 @@ public class Assignment2 {
 
       String avl_s = "SELECT * FROM Available";
       PreparedStatement avl_p = connection.prepareStatement(avl_s);
-      ResultSet avl = avl_p.executeQuery(avl_s);
+      ResultSet avl = avl_p.executeQuery();
 
       String req_s = "SELECT * FROM Request";
       PreparedStatement req_p = connection.prepareStatement(req_s);
-      ResultSet req = req_p.executeQuery(req_s);
+      ResultSet req = req_p.executeQuery();
    
 
       while (avl.next() && req.next()) {
          int RID = req.getInt("request_id");
          int DID = avl.getInt("driver_id");
          Object loc =avl.getObject("location");
+
          PreparedStatement ps = connection.prepareStatement("INSERT INTO Dispatch (request_id, driver_id, car_location, datetime) VALUES (?, ?, ?, ?)");
          ps.setInt(1, RID);
          ps.setInt(2, DID);
