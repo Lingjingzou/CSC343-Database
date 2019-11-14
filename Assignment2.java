@@ -261,9 +261,9 @@ public class Assignment2 {
         boolean result2 =a2.picked_up(12345, 99, timestamp);
         if (result2 == true){System.out.println("Finish Pick Up!");}
       
-         // Test dispatch
-        System.out.println("Test dispatch:");
-        a2.dispatch(new PGpoint(1, 100), new PGpoint(100, 1), new Timestamp(new Date().getTime()));
+      //    // Test dispatch
+      //   System.out.println("Test dispatch:");
+      //   a2.dispatch(new PGpoint(1, 100), new PGpoint(100, 1), new Timestamp(new Date().getTime()));
 
 
         boolean discon =a2.disconnectDB();
