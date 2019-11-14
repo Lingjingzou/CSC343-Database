@@ -82,19 +82,19 @@ public class Assignment2 {
          
          PreparedStatement st = connection.prepareStatement(queryString);
          st.setInt(1, driverID);
-         System.err.println("Set driver ID!");
+         // System.err.println("Set driver ID!");
          st.setTimestamp(2, when);
-         System.err.println("Set datetime!");
+         // System.err.println("Set datetime!");
          st.setObject(3, location);
-         System.err.println("Set location!");
+         // System.err.println("Set location!");
          st.executeUpdate();
 
-         PreparedStatement fis = connection.prepareStatement("SELECT * FROM Available");
-         ResultSet fi = fis.executeQuery();
+         // PreparedStatement fis = connection.prepareStatement("SELECT * FROM Available");
+         // ResultSet fi = fis.executeQuery();
 
-         while (fi.next()) {
-            System.out.println("have: " + fi.getInt("driver_id") + fi.getTimestamp("datetime") + fi.getObject("location"));
-            }
+         // while (fi.next()) {
+         //    System.out.println("have: " + fi.getInt("driver_id") + fi.getTimestamp("datetime") + fi.getObject("location"));
+         //    }
 
          return true;
 
@@ -131,12 +131,12 @@ public class Assignment2 {
          while (re.next()) {
             if (re.getInt("driver_id") == driverID ){
                   request_ID = re.getInt("request_id");
-                  System.out.println("drive in dis found!");
+                  // System.out.println("drive in dis found!");
                   break;
                }
             return false;
          }
-         System.out.println("Request : " + request_ID + "is found !");
+         // System.out.println("Request : " + request_ID + "is found !");
 
          String query = "SELECT * FROM Pickup";
 
@@ -145,7 +145,7 @@ public class Assignment2 {
 
          while (result.next()) {
             if (result.getInt("request_id") == request_ID){
-                  System.out.println("pickup exist");
+                  // System.out.println("pickup exist");
                   return false;
                }
          }
@@ -155,12 +155,12 @@ public class Assignment2 {
          ps.setTimestamp(2, when);
          ps.executeUpdate();
 
-         PreparedStatement fis = connection.prepareStatement("SELECT * FROM Pickup");
-         ResultSet fi = fis.executeQuery();
+         // PreparedStatement fis = connection.prepareStatement("SELECT * FROM Pickup");
+         // ResultSet fi = fis.executeQuery();
 
-         while (fi.next()) {
-            System.out.println("pick : r_id : " + fi.getInt("request_id") + fi.getTimestamp("datetime"));
-            }
+         // while (fi.next()) {
+         //    System.out.println("pick : r_id : " + fi.getInt("request_id") + fi.getTimestamp("datetime"));
+         //    }
          
          return true;
 
